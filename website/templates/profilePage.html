@@ -1,0 +1,59 @@
+{% extends "base.html" %} {% block title %}Profile Page - CR{% endblock %}  {% block css %}
+<link rel="stylesheet" href="static/css/profilePage.css">
+{% endblock %}{% block content %}
+    <div class="container">
+        <div class="main">
+            <div class="profile">
+                <div class="top-header">
+                <div class="profile-header">
+                    <img src="static/img/profile.jpg" alt="profile" class="profile-img"/>
+                    <div class="profile-text-container">
+                        <p class="profile-title">Hi, {{ session.userName }}</p>
+                    </div>
+                </div>
+                </div>
+                <div class="menu">
+                    <a href="/profile" class="menu-link" id="profile"><i class="fa-solid fa-circle-user menu-icon"></i>Profile</a>
+                    <a href="/pass" class="menu-link" id="password"><i class="fa-solid fa-gear menu-icon"></i>Change Password</a>
+                    <a href="/preresult" class="menu-link" id="result"><i class="fa solid fa-cloud-download menu-icon"></i>History</a>
+                    <a href="/logout" class="menu-link"><i class="fa-solid fa-right-from-bracket menu-icon"></i>Logout</a>
+                </div>
+            </div>
+        <div class="account">
+            <div class="profile-account">
+                <div class="content">
+                    <form action="{{ url_for('auth.profileupdate') }}" autocomplete="off" class="profile-update" method="post">
+                        <div class="title">Profile Update</div>
+                        {% if message is defined and message %}
+                        <div id="messageError" class="alert alert-warning" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" onclick="hideAlert()">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                        {% endif %}
+                        <div class="user-details">
+                            <div class="input-box">
+                                <span class="details">Username</span>
+                                <input type="text" name="userName" placeholder="{{ session.userName }}">
+                            </div>
+                            <div class="input-box">
+                                <span class="details">Email</span>
+                                <input type="text" name="userEmail" placeholder="{{ session.userEmail }}">
+                            </div>
+                            <div class="input-box">
+                                <span class="details">User Status</span>
+                                <input type="text" name="userStatus" value="{{ session.userStatus }}" readonly>
+                            </div>
+                        </div>
+                        <div class="button">
+                            <input type="submit" value="Save">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script src="static/js/profile.js"></script>
+{% endblock %}

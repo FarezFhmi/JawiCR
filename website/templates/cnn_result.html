@@ -1,0 +1,42 @@
+{% extends "base.html" %} 
+{% block title %}Home - CR{% endblock %}  
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resultcr.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="main"> 
+        <div class="content">
+            <div class="top">
+                <h2>Jawi Recognition</h2>
+                <hr>
+            </div>
+            <div class="card">
+              <div class="wrapper">
+                <i id="left" class="fa-solid fa-angle-left"></i>
+                <ul class="carousel">
+                {% for prediction in predictions %}
+                  <li class="card">
+                    <div class="img">
+                        <img src="data:image/png;base64,{{ prediction.image_base64 }}" alt="img" draggable="false">
+                    </div>
+                    <h2>Recognition Result: {{ prediction.prediction }}</h2>
+                    <span>Probability: {{ prediction.probability }}</span>
+                  </li>
+                {% endfor %}
+                </ul>
+                <i id="right" class="fa-solid fa-angle-right"></i>
+              </div>  
+              <form action="{{ url_for('views.homeUser') }}" method="GET">
+                <input type="hidden" name="source" value="{{ source }}">
+                <button type="submit">Try Again</button>
+              </form>                    
+            </div>
+        </div>
+        <div class="form-img">
+        <img src="{{ url_for('static', filename='img/okay.png') }}" alt="">
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% endblock %}

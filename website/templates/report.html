@@ -1,0 +1,43 @@
+{% extends "baseAdmin.html" %} {% block title %}History Result - CR{% endblock %}  {% block css %}
+<link rel="stylesheet" href="static/css/report.css">
+{% endblock %}{% block content %}
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+        <img src="static/img/profile.jpg" alt="">
+    </div>
+    <div class="dash-content">
+        <h3 class="header-highlight">History Result Recognition</h3>
+            <div class="info_data">
+                <table>
+                    <thead>
+                        <tr>
+                        <th>No</th>
+                        <th>Result Name</th>
+                        <th>Date Recognition</th>
+                        <th>Result Image</th>
+                        <th>Probability Recognition</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        {% if list_report %}
+                        {% for report in list_report %}
+                        <tr>
+                            <td>{{ report['resultID'] }}</td>
+                            <td>{{ report['resultName'] }}</td>
+                            <td>{{ report['resultDate'] }}</td>
+                            <td><img src="data:image/png;base64,{{ report['resultImage']|b64encode }}" alt="Image" width="100px" height="100px"/></td>
+                            <td>{{ report['resultProbability'] }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5">Don't have any report...</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+    </div>
+<script src="static/js/admin.js"></script>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %} {% block title %}Home - CR{% endblock %}  {% block css %}
+<link rel="stylesheet" href="static/css/home.css">
+{% endblock %}{% block content %}
+<div class="container">
+    <div class="main"> 
+        <div class="content">
+            <div class="top">
+                <h2>Choose the features</h2>
+                <hr>
+            </div>
+            {% if mesage is defined and mesage %}
+                <div id="messageError" class="alert alert-warning" role="alert">
+                    {{ mesage }}
+                    <button type="button" class="close" onclick="hideAlert()">
+                        <span>&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+            <div class="card">
+                <div class="tile">
+                    <input type="checkbox" id="redirectCheckbox1">
+                    <label for="redirectCheckbox1">
+                        <a href="{{ url_for('views.ocr_section') }}"><img src="static/img/scan.png"></a>
+                        <h6>OCR</h6>
+                        </img>
+                    </label>
+                </div>
+                <div class="tile">
+                    <input type="checkbox" id="redirectCheckbox2">
+                    <label for="redirectCheckbox2">
+                        <a href="{{ url_for('views.cnn_section') }}"><img src="static/img/arabic-language.png"></a>
+                        <h6>Single Character</h6>
+                        </img>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-img">
+            <img src="static/img/thinking-removebg-preview.png" alt="">
+        </div>
+    </div>
+</div>
+<script src="static/js/home.js"></script>
+{% endblock %}

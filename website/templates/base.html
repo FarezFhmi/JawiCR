@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Odibee Sans' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>{% block title %}Home{% endblock %}</title>
+    <link rel="icon" href="static/img/crlogo.png" type="image/x-icon">
+    {% block css %}
+    {% endblock %}
+</head>
+<body>
+  <nav>
+    <ul class="sidebar">
+      <li onclick=hideSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 96 960 960" width="26"><path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"/></svg></a></li>
+      <li><a href="/">Home</a></li> <!--fa-home-->
+      {% if session.loggedin %}
+      <li onclick="toggle()"><a href="#"><i class="fa-solid fa-user menu-icon"></i>Hi, {{ session.userName }}</a></li>
+      <div class="sub-sidebar">
+        <li><a href="/profile" id="settingLink">Setting</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </div>
+      {% else %}
+      <li><a href="/login">Login</a></li>
+      {% endif %}
+    </ul>
+    <ul>
+      <li><a href="/">
+        <div class="logo">
+          <img src="static/img/crlogo.png" alt="easyclass" />
+          <h4>JawiCR</h4>
+        </div></a>
+      </li>
+      <li class="hideOnMobile"><a href="/">Home</a></li>
+      {% if session.loggedin %}
+      <li class="hideOnMobile"><a class="user-click" onclick="toggleMenu()"><i class="fa-solid fa-user icon"></i>Hi, {{ session.userName }}
+        <div class="sub-menu-wrap" id="subMenu">
+          <div class="sub-menu">
+            <div class="user-info">
+              <img src="static/img/profile.jpg">
+              <h3>{{ session.userName }}</h3>
+            </div>
+            <hr>
+            <a href="/profile" id="settingLink" class="sub-menu-link">
+              <i class="fa-solid fa-user-gear menu-icon"></i>
+              <p>Setting</p>
+              <span></span>
+            </a>
+            <a href="/logout" class="sub-menu-link">
+              <i class="fa-solid fa-right-from-bracket menu-icon"></i>
+                <p>Logout</p>
+                <span></span>
+            </a>
+          </div>
+        </div>
+      </a>
+      </li>
+      {% else %}
+      <li class="hideOnMobile"><a href="/login">Login</a></li>
+      {% endif %}
+      <li class="menu-button" onclick=showSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 96 960 960" width="26"><path d="M120 816v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z"/></svg></a></li>
+    </ul>
+  </nav>
+  <main>
+    {% block content %} {% endblock %}
+  </main>
+  <footer>
+    <div class="footer-row">
+      <div class="footer-col">
+        <p>
+          Copyright © 2024. All rights reserved. By Reez
+        </p>
+    </div>
+  </footer>
+</body>
+</html>

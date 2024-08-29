@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}OCR - JCR{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="static/css/ocrCNN.css">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="main"> 
+        <div class="content">
+            <div class="top">
+                <h2>Jawi Character Recognition</h2>
+                <hr>
+            </div>
+            <div class="card">
+                {% if message is defined and message %}
+                    <div id="messageError" class="alert alert-warning" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" onclick="hideAlert()">
+                        <span>&times;</span>
+                    </button>
+                    </div>
+                {% endif %}
+                <form id="uploadForm" action="{{ url_for('views.ocr_process') }}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="source" value="cnn">
+                    <div class="drag-area" id="dragArea">
+                        <span class="visible">
+                            Drag & drop image here or
+                            <span class="select" id="select" role="button">Browse</span>
+                        </span>
+                        <span class="on-drop">Drop images here</span>
+                        <input id="fileInputGallery" name="imagefile" type="file" class="file" accept="image/*" style="display:none;" />
+                        <input id="fileInputCamera" name="imagefile" type="file" class="file" accept="image/*" capture="camera" style="display:none;" />
+                    </div>
+                    <div class="top">
+                        <p>Drag & drop image uploading</p>
+                        <div class="container-photo" id="container-photo"></div>
+                        <button type="submit" value="Upload">Upload</button>
+                    </div>
+                </form>                                       
+            </div>
+        </div>
+        <div class="form-img">
+            <img src="static/img/image-upload.png" alt="">
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="fileChooserModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Select Image</p>
+        <button id="chooseCamera">Take Photo...</button>
+        <button id="chooseGallery">Choose from Library...</button>
+    </div>
+</div>
+
+<script src="static/js/home.js"></script>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "baseAdmin.html" %}
+{% block title %}Manage - CR{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/manage.css') }}">
+{% endblock %}
+{% block content %}
+<div class="top">
+    <i class="uil uil-bars sidebar-toggle"></i>
+</div>
+<div class="container">
+    <div class="main"> 
+        <div class="profile">
+            <div class="top-header">
+                <div class="profile-header">
+                    <img src="{{ url_for('static', filename='img/profile.jpg') }}" alt="profile" class="profile-img"/>
+                </div>
+            </div>
+        </div>
+        <div class="account">
+            <div class="profile-account">
+                <div class="content">
+                    {% if user %}
+                    <form action="{{ url_for('views.manage', user_id=user[0]) }}" autocomplete="off" class="profile-update" method="post">
+                        <div class="title">Manage User</div>
+                        {% if mesage is defined and mesage %}
+                        <div id="messageError" class="alert alert-warning" role="alert">
+                            {{ mesage }}
+                            <button type="button" class="close" onclick="hideAlert()">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                        {% endif %}
+                        <div class="user-details">
+                            <div class="input-box">
+                                <span class="details">Username</span>
+                                <input type="text" name="userName" value="{{ user[1] }}" readonly>
+                            </div>
+                            <div class="input-box">
+                                <span class="details">Email Address</span>
+                                <input type="text" name="userEmail" value="{{ user[2] }}" readonly>
+                            </div>
+                            <div class="input-box">
+                                <span class="details">User Date Register</span>
+                                <input type="text" name="userDate" value="{{ user[4] }}" readonly>
+                            </div>
+                            <div class="input-box">
+                                <span class="details">User Status</span>
+                                <select class="optional" id="userStatus" name="userStatus">
+                                    <option value="Verify" {% if user[5] == 'Verify' %}selected{% endif %}>Verify</option>
+                                    <option value="Not Verified" {% if user[5] == 'Not Verified' %}selected{% endif %}>Not Verified</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="button-group">
+                            <input type="submit" value="Update">
+                            <input type="button" value="Delete" onclick="deleteUser({{ user[0] }})">
+                        </div>
+                    </form>
+                    {% else %}
+                    <div class="alert alert-danger">User not found.</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+<script>
+    function hideAlert() {
+    var alertElement = document.getElementById('messageError');
+    if (alertElement) {
+        alertElement.style.display = 'none';
+        }
+    }
+
+    function deleteUser(userId) {
+        if (confirm('Are you sure you want to delete this user?')) {
+            window.location.href = `/delete_user/${userId}`;
+        }
+    }
+</script>
+{% endblock %}

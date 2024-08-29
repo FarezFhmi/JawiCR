@@ -1,0 +1,53 @@
+{% extends "baseAdmin.html" %}
+{% block title %}User - CR{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="static/css/user.css">
+{% endblock %}
+{% block content %}
+<div class="top">
+    <i class="uil uil-bars sidebar-toggle"></i>
+    <img src="static/img/profile.jpg" alt="">
+</div>
+<div class="dash-content">
+    <h3 class="header-highlight">All User</h3>
+    {% if mesage is defined and mesage %}
+        <div id="messageError" class="alert alert-warning" role="alert">
+            {{ mesage }}
+            <button type="button" class="close" onclick="hideAlert()">
+                <span>&times;</span>
+            </button>
+        </div>
+    {% endif %}
+    <div class="info_data">
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Username</th>
+                    <th>Joined</th>
+                    <th>Status</th>
+                    <th>Manage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if user_data %}
+                {% for user in user_data %}
+                <tr>
+                    <td>{{ user['userID'] }}</td>
+                    <td>{{ user['userName'] }}</td>
+                    <td>{{ user['userDate'] }}</td>
+                    <td>{{ user['userStatus'] }}</td>
+                    <td><a href="{{ url_for('views.manage', user_id=user['userID']) }}" class="btn">Manage</a></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="5">Doesn't have Anything...</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="static/js/admin.js"></script>
+{% endblock %}

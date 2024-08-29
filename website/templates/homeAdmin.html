@@ -1,0 +1,88 @@
+{% extends "baseAdmin.html" %}
+{% block title %}AdminHome - CR{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="static/css/adminhome.css">
+{% endblock %}
+{% block content %}
+<div class="top">
+    <i class="uil uil-bars sidebar-toggle"></i>
+    <img src="static/img/profile.jpg" alt="">
+</div>
+
+<div class="dash-content">
+    <div class="overview">
+        <div class="title">
+            <i class="uil uil-tachometer-fast-alt"></i>
+            <span class="text">Dashboard</span>
+        </div>
+
+        <div class="boxes">
+            <div class="box box1">
+                <i class="uil uil-user-exclamation"></i>
+                <span class="text">User Registered</span>
+                <span class="number">{{ count_user }}</span>
+            </div>
+            <div class="box box2">
+                <i class="uil uil-search-alt"></i>
+                <span class="text">Result Recognition</span>
+                <span class="number">{{ count_result }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="activity-container">
+        <div class="activity">
+            <div class="title">
+                <i class="uil uil-clock-three"></i>
+                <span class="text">Recent Activity</span>
+            </div>
+
+            <div class="activity-data">
+                <div class="data names">
+                    <span class="data-title">Name</span>
+                    {% for user in user_data %}
+                    <span class="data-list">{{ user[0] }}</span>
+                    {% endfor %}
+                </div>
+                <div class="data email">
+                    <span class="data-title">Email</span>
+                    {% for user in user_data %}
+                    <span class="data-list">{{ user[1] }}</span>
+                    {% endfor %}
+                </div>
+                <div class="data joined">
+                    <span class="data-title">Joined</span>
+                    {% for user in user_data %}
+                    <span class="data-list">{{ user[2] }}</span>
+                    {% endfor %}
+                </div>
+                <div class="data status">
+                    <span class="data-title">Status</span>
+                    {% for user in user_data %}
+                    <span class="data-list">{{ user[3] }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="activity">
+            <div class="title">
+                <i class="uil uil-clock-three"></i>
+                <span class="text">Prediction Accuracy</span>
+            </div>
+
+            <div class="activity-data">
+                <div class="chart">
+                    <canvas id="line" width="300px" height="300px"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const resultProbabilities = JSON.parse('{{ result_probabilities | tojson | safe }}');
+</script>
+<script src="static/js/admin.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="static/js/chart1.js"></script>
+{% endblock %}

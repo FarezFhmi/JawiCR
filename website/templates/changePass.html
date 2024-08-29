@@ -1,0 +1,68 @@
+{% extends "base.html" %} {% block title %}Profile Page - CR{% endblock %}  {% block css %}
+<link rel="stylesheet" href="static/css/profilePage.css">
+{% endblock %}{% block content %}
+    <div class="container">
+        <div class="main">
+            <div class="profile">
+                <div class="top-header">
+                <div class="profile-header">
+                    <img src="static/img/profile.jpg" alt="profile" class="profile-img"/>
+                    <div class="profile-text-container">
+                        <p class="profile-title">Hi, {{ session.userName }}</p>
+                    </div>
+                </div>
+                </div>
+                <div class="menu">
+                    <a href="/profile" class="menu-link" id="profile"><i class="fa-solid fa-circle-user menu-icon"></i>Profile</a>
+                    <a href="/pass" class="menu-link" id="password"><i class="fa-solid fa-gear menu-icon"></i>Change Password</a>
+                    <a href="/preresult" class="menu-link" id="result"><i class="fa solid fa-cloud-download menu-icon"></i>History</a>
+                    <a href="/logout" class="menu-link"><i class="fa-solid fa-right-from-bracket menu-icon"></i>Logout</a>
+                </div>
+            </div>
+        <div class="account">
+            <div class="profile-account">
+                <div class="content">
+                    <form action="{{ url_for('auth.changepassword') }}" autocomplete="off" class="password-change" method="post">
+                        <div class="title">Change Password</div>
+                        {% if mesage %}
+                        <div id="messageError" class="alert alert-warning" role="alert">
+                            {{ mesage }}
+                            <button type="button" class="close" onclick="hideAlert()">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                        {% endif %}
+                        <div class="user-details">
+                            <div class="input-box">
+                                <span class="details">Old Password</span>
+                                <div class="input-wrapper">
+                                    <input id="password_old" type="password" name="oldpassword" placeholder="Enter your old password" required>
+                                    <img src="static/img/eye-close.png" class="eye-icon" id="eyeicon2">
+                                </div>
+                            </div>
+                            <div class="input-box">
+                                <span class="details">New Password</span>
+                                <div class="input-wrapper">
+                                    <input id="password_new" type="password" name="newpassword" placeholder="Enter your new password" required>
+                                    <img src="static/img/eye-close.png" class="eye-icon" id="eyeicon3">
+                                </div>
+                            </div>
+                            <div class="input-box">
+                                <span class="details">Confirm Password</span>
+                                <div class="input-wrapper">
+                                    <input id="password_confirm" type="password" name="confirmpass" placeholder="Confirm your password" required>
+                                    <img src="static/img/eye-close.png" class="eye-icon" id="eyeicon4">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button">
+                            <input type="submit" value="Save">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script src="static/js/profile.js"></script>
+{% endblock %}

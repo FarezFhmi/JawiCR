@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--=== Coding by CodingLab | www.codinglabweb.com === -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Odibee Sans' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <!----======== CSS ======== -->
+    {% block css %}{% endblock %}
+     
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <link rel="icon" href="{{ url_for('static', filename='img/crlogo.png') }}" type="image/x-icon">
+
+    <title>{% block title %}Home{% endblock %}</title> 
+</head>
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="{{ url_for('static', filename='img/crlogo.png') }}" alt="">
+            </div>
+
+            <span class="logo_name">JawiCR</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="/homeAdmin">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Dahsboard</span>
+                </a></li>
+                <li><a href="/manageuser">
+                    <i class="uil uil-users-alt"></i>
+                    <span class="link-name">Users</span>
+                </a></li>
+                <li><a href="/history">
+                    <i class="uil uil-files-landscapes"></i>
+                    <span class="link-name">Result Recognition</span>
+                </a></li>
+            </ul>
+            
+            <ul class="logout-mode">
+                <li><a href="/logout">
+                    <i class="uil uil-signout"></i>
+                    <span class="link-name">Logout</span>
+                </a></li>
+
+            </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        {% block content %} {% endblock %}
+    </section>
+</body>
+</html>

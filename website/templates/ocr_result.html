@@ -1,0 +1,56 @@
+{% extends "base.html" %} 
+{% block title %}Choose - CR{% endblock %}  
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ocr.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="main"> 
+        <div class="content">
+            <div class="top">
+                <h2>Choose the image</h2>
+                <hr>
+            </div>
+            {% if mesage %}
+                <div id="messageError" class="alert alert-warning" role="alert">
+                    {{ mesage }}
+                        <button type="button" class="close" onclick="hideAlert()">
+                        <span>&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+            <form id="ocrForm" action="{{ url_for('views.cnn_process') }}" method="post">
+                <input type="hidden" name="source" value="ocr">
+                <div class="card">
+                    {% for result in ocr_results %}
+                        {% for idx, image in enumerate(result.char_images) %}
+                            <div class="tile">
+                                <input type="checkbox" name="selected_images" value="{{ result.image_id }}_{{ idx }}" id="{{ result.image_id }}_{{ idx }}">
+                                <label for="{{ result.image_id }}_{{ idx }}">
+                                    <img src="data:image/png;base64,{{ image|b64encode }}" alt="Character">
+                                </label>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    <button type="submit">Recognize Images</button>
+                </div>
+            </form>
+        </div>
+      <div class="form-img">
+        <img src="{{ url_for('static', filename='img/looking.png') }}" alt="">
+      </div>
+    </div>
+</div>
+<script src="static/js/home.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const ocrForm = document.getElementById('ocrForm');
+        const submitButton = ocrForm.querySelector('button[type="submit"]');
+        
+        ocrForm.addEventListener('submit', e => {
+            submitButton.disabled = true;
+            submitButton.innerText = "Analyzing...";
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %} {% block title %}Profile Page - CR{% endblock %}  {% block css %}
+<link rel="stylesheet" href="static/css/profilePage.css">
+{% endblock %}{% block content %}
+    <div class="container">
+        <div class="main">
+            <div class="profile">
+                <div class="top-header">
+                <div class="profile-header">
+                    <img src="static/img/profile.jpg" alt="profile" class="profile-img"/>
+                    <div class="profile-text-container">
+                        <p class="profile-title">Hi, {{ session.userName }}</p>
+                    </div>
+                </div>
+                </div>
+                <div class="menu">
+                    <a href="/profile" class="menu-link" id="profile"><i class="fa-solid fa-circle-user menu-icon"></i>Profile</a>
+                    <a href="/pass" class="menu-link" id="password"><i class="fa-solid fa-gear menu-icon"></i>Change Password</a>
+                    <a href="/preresult" class="menu-link" id="result"><i class="fa solid fa-cloud-download menu-icon"></i>History</a>
+                    <a href="/logout" class="menu-link"><i class="fa-solid fa-right-from-bracket menu-icon"></i>Logout</a>
+                </div>
+            </div>
+        <div class="account">
+            <div class="profile-account">
+                <div class="content">
+                    <form action="{{ url_for('auth.preresult') }}" autocomplete="off" class="preview-result" method="post">
+                        <div class="title">History</div>
+                        {% if message %}
+                        <div id="messageError" class="alert alert-warning" role="alert">
+                            {{ mesage }}
+                            <button type="button1" class="close" onclick="hideAlert()">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                        {% endif %}
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Image Name</th>
+                                        <th>Upload Date</th>
+                                        <th>Image</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if img_history %}
+                                        {% for user in img_history %}
+                                            <tr>
+                                                <td>{{ user['resultID'] }}</td>
+                                                <td>{{ user['resultName'] }}</td>
+                                                <td>{{ user['resultDate'] }}</td>
+                                                <td><img src="data:image/png;base64,{{ user['resultImage']|b64encode }}" alt="Image" width="100px" height="100px"/></td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="5">Doesn't upload Anything...</td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                            <div class="user-details">
+                                <div class="input-box">
+                                    <span class="details">You want to download the result?</span>
+                                </div>
+                            </div>
+                            <div class="button">
+                                <a href="{{ url_for('views.download_history') }}" class="btn btn-primary" id="downloadButton" onclick="handleDownload()">Download History</a>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script>
+        function handleDownload() {
+            const button = document.getElementById('downloadButton');
+            button.innerText = 'Processing...';
+            button.style.pointerEvents = 'none';
+        
+            fetch(button.href)
+                .then(response => {
+                    if (response.ok) {
+                        return response.blob();
+                    } else {
+                        throw new Error('Network response was not ok.');
+                    }
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'history.pdf'; // Set the filename dynamically if needed
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                })
+                .finally(() => {
+                    button.innerText = 'Download History';
+                    button.style.pointerEvents = 'auto';
+                });
+        
+            return false; // Prevent default anchor click behavior
+        }
+        </script>
+    <script src="static/js/profile.js"></script>
+{% endblock %}
