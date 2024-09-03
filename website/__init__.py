@@ -22,7 +22,7 @@ def b64encode(data):
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'Syira Mine <3'
+    app.config['SECRET_KEY'] = 'FYP'
 
     app.config['DEBUG'] = True
 
