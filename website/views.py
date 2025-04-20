@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 import pytesseract
 import tensorflow as tf
-from tensorflow.keras.preprocessing import image
+from keras._tf_keras.keras.preprocessing import image
 from datetime import datetime
 from io import BytesIO
 import base64
