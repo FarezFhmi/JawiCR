@@ -1,4 +1,4 @@
-# 🧠 Jawi Character Recognition using CNN
+# 🧠 JawiCR
 
 **Jawi Character Recognition** is a web-based application developed as part of a Final Year Project. It aims to recognize individual Jawi characters from images using a Convolutional Neural Network (CNN). The system enables users to upload either a single character or a word image, processes the input, and returns predicted characters. It features a user-friendly interface with character segmentation and manual selection capabilities.
 
